@@ -1,0 +1,3 @@
+# Band gap predict
+
+By using data from MP/AFLOW/Experiment, train some ML models which can be used to predict band gap of semiconductors...
