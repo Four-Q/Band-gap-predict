@@ -19,7 +19,7 @@ from matplotlib import pyplot as plt
 from sklearn.metrics import r2_score, mean_absolute_error, root_mean_squared_error
 
 
-def parity_plot(y_test, y_pred, r2_score=None, rmse=None, mae=None, fig_path=None):
+def parity_plot(y_test, y_pred, r2_score=None, rmse=None, mae=None, fig_path=None, fig_show=True):
     """
     Generate a parity plot to visualize the model's predictions against the true values.
     """
@@ -86,10 +86,12 @@ def parity_plot(y_test, y_pred, r2_score=None, rmse=None, mae=None, fig_path=Non
     # save figure
     if fig_path:
         plt.savefig(fig_path, dpi=300, bbox_inches='tight')
-    plt.show()
+        print(f"Figure saved to: {fig_path}")
+    if fig_show:
+        plt.show()
 
 # Model performance metrics
-def model_performance(y_test, y_pred, fig_path=None):
+def model_performance(y_test, y_pred, fig_path=None, fig_show=True):
     """
     Calculate and print model performance metrics.
     """
@@ -98,12 +100,12 @@ def model_performance(y_test, y_pred, fig_path=None):
     mae = mean_absolute_error(y_test, y_pred)
 
     # draw
-    parity_plot(y_test, y_pred, r2_score=r2, rmse=rmse, mae=mae, fig_path=fig_path)
+    parity_plot(y_test, y_pred, r2_score=r2, rmse=rmse, mae=mae, fig_path=fig_path, fig_show=fig_show)
     return r2, rmse, mae
 
 
 
-def plot_feature_importance(model, feature_names, top_n=10, fig_path=None):
+def plot_feature_importance(model, feature_names, top_n=10, fig_path=None, fig_show=True):
     """plot the feature importance of the model"""
     importances = model.feature_importances_
     importances_df = pd.DataFrame({'Feature': feature_names, 'Importance': importances})
@@ -117,8 +119,10 @@ def plot_feature_importance(model, feature_names, top_n=10, fig_path=None):
     plt.xlabel('Importance', size=13)
     plt.ylabel('Feature', size=13)
     plt.title('Feature Importance of Band Gap', size=15)
-    plt.show()
+    if fig_show:
+        plt.show()
     # save the figure
     if fig_path:
         fig.savefig(fig_path, dpi=300, bbox_inches='tight')
+        print(f"Figure saved to: {fig_path}")
     return importances_df
