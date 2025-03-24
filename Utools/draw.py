@@ -67,7 +67,7 @@ def parity_plot(y_test, y_pred, r2_score=None, rmse=None, mae=None, fig_path=Non
     min_resid = round(residuals.min())
     if (max_resid - min_resid) < 6:
         # if the range of residuals is less than 5, set the bin size to 0.5
-        bin_edges = np.arange(min_resid - 0.25, max_resid + 0.25, 0.5)
+        bin_edges = np.arange(min_resid - 0.25, max_resid + 0.25 + 1e-10, 0.5)
     else:
         # if the range of residuals is greater than 5, set the bin size to 1
         bin_edges = np.arange(min_resid - 0.5, max_resid + 0.5, 1)  
