@@ -59,3 +59,10 @@ So the number of features we use to train our model is **106**.
 
 we use **Random Search** for the model which hp search time is too long,
 and use **Grid Search** for the model which hp search time is short.
+
+### Test set:
+
+There are three type test set:
+- Test on the same set (such as trained on dft, test on dft)
+- Test on the another set(such as trained on dft, test on exp)
+- Test on the mixed set (such as trained on dft, test on dft+exp)
