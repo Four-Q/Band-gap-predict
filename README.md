@@ -5,7 +5,10 @@ By using data from MP/AFLOW/Experiment, train some ML models which can be used t
 ## Data：
 
 DFT data from MP(Materail project) and AFLOW, Experiment data from Ya Zhuo et
-we use the **full composition** to represent a class of materail, for the same composition, we use the band gap value which is **closest** to the average value in this class.
+
+Elements number: 2 to 4
+MP data are stable data(e_above_hull=0)
+Band gap range: 0 to 6eV
 
 ## Featurization:
 
@@ -23,8 +26,6 @@ The **stats** are:
 ['minimum', 'maximum', 'range', 'mean', 'avg_dev', 'mode']
 **Totally 132** features.
 
-Then we remove one of the two features with a linear correlation coefficient greater than 0.95.
-So the number of features we use to train our model is **106**.
 
 
 ## Train
