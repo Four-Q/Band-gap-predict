@@ -72,34 +72,46 @@ class SingleModel:
             
         return self.pipe.predict(X_test)
     
-    def evaluate(self, X_test, y_test, fig_path=None):
+    def evaluate(self, X_test, y_test, fig_path=None, fig_show=True):
         """
         Evaluate model performance
         
         Args:
             X_test: Test features
             y_test: Test target values
-            
+            fig_path: Path to save the performance plot
+            fig_show: Whether to show the plot
         Returns:
             metrics: Dictionary with performance metrics
         """
+
+        # 
+        def mean_absolute_percentage_error(y_true, y_pred):
+            y_true, y_pred = np.array(y_true), np.array(y_pred)
+            # Avoid division by zero
+            mask = y_true != 0
+            return np.mean(np.abs((y_true[mask] - y_pred[mask]) / y_true[mask])) * 100
+        
+
         if not self.is_trained:
             raise ValueError("Model has not been trained. Call train() first.")
         
         # Test set evaluation
         test_pred = self.predict(X_test)
-        test_r2, test_rmse, test_mae = model_performance(y_test, test_pred, fig_path=fig_path)
-        
+        test_r2, test_rmse, test_mae = model_performance(y_test, test_pred, fig_path=fig_path, fig_show=fig_show)
+        test_mape = mean_absolute_percentage_error(y_test, test_pred)
         metrics = {
             'mae': test_mae,
             'rmse': test_rmse,
-            'r2': test_r2
+            'r2': test_r2,
+            'mape': test_mape
         }
         
         # Print test metrics
         print("\nModel Evaluation Results:")
-        print(f"Test set: R²: {test_r2:.4f}", f"RMSE: {test_rmse:.4f}", f"MAE: {test_mae:.4f}")
-         
+        print(f"Test set size: {len(X_test)}")
+        print(f"Test set: R²: {test_r2:.4f}", f"RMSE: {test_rmse:.4f}", f"MAE: {test_mae:.4f}", f"MAPE: {test_mape:.4f}%")
+
         return metrics
     
     
@@ -108,7 +120,7 @@ class SingleModel:
         Save the trained model to a file
         
         Args:
-            filepath: Path to save the model
+            file_path: Path to save the model
             
         Returns:
             self: For method chaining
@@ -127,7 +139,7 @@ class SingleModel:
         Args:
             X_test: Test features
             y_test: Test target values
-            filepath: Path to save the predictions
+            file_path: Path to save the predictions
             
         Returns:
             self: For method chaining
