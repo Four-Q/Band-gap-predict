@@ -92,6 +92,7 @@ if [ ! -d "$REPO_DIR" ]; then
 else
     echo -e "${YELLOW}更新已有仓库...${NC}"
     cd "$REPO_DIR"
+    git remote add origin git@github.com:Four-Q/Band-gap-predict.git
     git pull origin main
 fi
  

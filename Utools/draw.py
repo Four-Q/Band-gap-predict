@@ -89,7 +89,10 @@ def parity_plot(y_test, y_pred, r2_score=None, rmse=None, mae=None, fig_path=Non
         print(f"Figure saved to: {fig_path}")
     if fig_show:
         plt.show()
+    else:
+        plt.close(fig)
 
+        
 # Model performance metrics
 def model_performance(y_test, y_pred, fig_path=None, fig_show=True):
     """
